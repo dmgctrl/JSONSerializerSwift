@@ -43,7 +43,11 @@ public class JSONReader : Reader {
                 } else {
                     object = keyValuePair.value
                 }
-                return info.0
+                if nil != object {
+                    return info.0
+                } else {
+                    return 0
+                }
             } else {
                 return 0 // Error
             }

@@ -45,7 +45,7 @@ class JSONSerializerSwiftTests: XCTestCase {
     }
     
     func testReadEmptyJSON() {
-        var jsonString = "{\"nestedMessage\": []}"
+        var jsonString = "{\"demoRepeatedNestedMessage\": []}"
         let reader = JSONReader.from(jsonString.dataUsingEncoding(NSUTF8StringEncoding)!)
         let readDemoMessage = DemoMessage.fromReader(reader!)
 //        assert(demoMessage == readDemoMessage, "read object to match written object")
