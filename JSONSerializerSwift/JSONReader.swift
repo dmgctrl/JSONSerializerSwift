@@ -124,6 +124,14 @@ public class JSONReader : Reader {
         return ""
     }
     
+    public func pushLimit(limit: Int) -> Int {
+        return 0 // NO OP
+    }
+    
+    public func popLimit(limit: Int) {
+        // NO OP
+    }
+    
     public func pushTagMap(map: [String:(Int, Bool)]) {
         if nil != self.tagMap {
             tagMapStack.append(self.tagMap)
