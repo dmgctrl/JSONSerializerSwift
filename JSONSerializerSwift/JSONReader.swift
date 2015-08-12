@@ -35,22 +35,21 @@ public class JSONReader : Reader {
             return repeatedObject!.key
         }
         
-        if let keyValuePair = generator.next() {
-            if let info = tagMap[keyValuePair.key as! String] {
+        if let
+            keyValuePair = generator.next(),
+            info = tagMap[keyValuePair.key as! String] {
                 if info.1 {
                     repeatedObject = (key: info.0, generator: (keyValuePair.value as! NSArray).generate())
                     object = repeatedObject?.generator.next()
                 } else {
                     object = keyValuePair.value
                 }
-                if nil != object {
-                    return info.0
+                
+                if nil == object || object is NSNull {
+                    return readTag()
                 } else {
-                    return 0
+                    return info.0
                 }
-            } else {
-                return 0 // Error
-            }
         } else {
             return 0
         }
