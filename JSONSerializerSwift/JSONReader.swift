@@ -16,8 +16,14 @@ public class JSONReader : Reader {
     }
     
     public class func from(data: NSData) -> Reader? {
-        var error: NSError?
-        if let dict = (NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &error) as? NSDictionary) {
+        var readData : AnyObject?
+        do {
+            readData = try NSJSONSerialization.JSONObjectWithData(data, options: [])
+        } catch {
+            print(error)
+        }
+        
+        if let dict = readData as? NSDictionary {
             return JSONReader(dictionary: dict)
         } else {
             return nil
@@ -25,7 +31,7 @@ public class JSONReader : Reader {
     }
     
     public class func from(inputStream: NSInputStream) -> Reader? {
-        var dict: NSDictionary = NSJSONSerialization.JSONObjectWithStream(inputStream, options: nil, error: nil)! as! NSDictionary
+        let dict: NSDictionary = (try! NSJSONSerialization.JSONObjectWithStream(inputStream, options: [])) as! NSDictionary
         return JSONReader(dictionary: dict)
     }
     

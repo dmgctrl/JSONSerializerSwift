@@ -13,7 +13,7 @@ public class JSONWriter : Writer {
     }
     
     public func toBuffer() -> NSData {
-        return NSJSONSerialization.dataWithJSONObject(object, options: nil, error: nil)!
+        return try! NSJSONSerialization.dataWithJSONObject(object, options: [])
     }
     
     public func writeTag(tag: Int) {

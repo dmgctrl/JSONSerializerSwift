@@ -312,7 +312,9 @@
 		BC17DD7F1B04E609003F3DD4 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0620;
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = TonicDesign;
 				TargetAttributes = {
 					BC17DD871B04E609003F3DD4 = {
@@ -459,6 +461,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -534,6 +537,7 @@
 				INFOPLIST_FILE = JSONSerializerSwift/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tonicdesign.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = JSONSerializerSwift;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -551,6 +555,7 @@
 				INFOPLIST_FILE = JSONSerializerSwift/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tonicdesign.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = JSONSerializerSwift;
 				SKIP_INSTALL = YES;
 			};
@@ -559,16 +564,14 @@
 		BC17DDA21B04E609003F3DD4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = JSONSerializerSwiftTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tonicdesign.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = JSONSerializerSwiftTests;
 			};
 			name = Debug;
@@ -576,12 +579,10 @@
 		BC17DDA31B04E609003F3DD4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = JSONSerializerSwiftTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tonicdesign.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = JSONSerializerSwiftTests;
 			};
 			name = Release;
@@ -605,6 +606,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tonicdesign.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = JSONSerializerSwift;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -626,6 +628,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tonicdesign.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = JSONSerializerSwift;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -649,6 +652,7 @@
 				INFOPLIST_FILE = "JSONSerializerSwift(OSX)Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tonicdesign.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = JSONSerializerSwiftTests;
 				SDKROOT = macosx;
 			};
@@ -667,6 +671,7 @@
 				INFOPLIST_FILE = "JSONSerializerSwift(OSX)Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tonicdesign.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = JSONSerializerSwiftTests;
 				SDKROOT = macosx;
 			};

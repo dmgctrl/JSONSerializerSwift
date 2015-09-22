@@ -50,7 +50,7 @@ public class DemoMessage: Equatable {
     }
     
     public func toWriter(w: Writer) {
-        var tagMap: [Int:(String, Bool)] = [
+        let tagMap: [Int:(String, Bool)] = [
             9 : ("demoDouble", false),
             16 : ("demoInt32", false),
             24 : ("demoInt64", false),
@@ -107,7 +107,7 @@ public class DemoMessage: Equatable {
     }
     
     public class func fromReader(r: Reader) -> DemoMessage {
-        var tagMap: [String:(Int, Bool)] = [
+        let tagMap: [String:(Int, Bool)] = [
             "demoDouble" : (9, false),
             "demoInt32" : (16, false),
             "demoInt64" : (24, false),
@@ -171,7 +171,7 @@ public class DemoMessage: Equatable {
         }
         
         public func toWriter(w: Writer) {
-            var tagMap: [Int:(String, Bool)] = [
+            let tagMap: [Int:(String, Bool)] = [
                 10 : ("nestedString", false),
                 16 : ("nestedInt32", false)
             ]
@@ -192,7 +192,7 @@ public class DemoMessage: Equatable {
         }
         
         public class func fromReader(r: Reader) -> DemoNestedMessage {
-            var tagMap: [String:(Int, Bool)] = [
+            let tagMap: [String:(Int, Bool)] = [
                 "nestedString" : (10, false),
                 "nestedInt32" : (16, false)
             ]
