@@ -29,7 +29,7 @@ class JSONSerializerSwiftTests: XCTestCase {
         let writer = JSONWriter.writer()!
         demoMessage.toWriter(writer)
         let buffer = writer.toBuffer()
-        let jsonString = NSString(data: buffer, encoding: NSUTF8StringEncoding)
+        let jsonString = NSString(data: buffer, encoding: String.Encoding.utf8.rawValue)
         assert(jsonString == "{\"demoInt32\":42,\"demoNestedMessage\":{\"nestedString\":\"nested string\",\"nestedInt32\":42},\"demoRepeated\":[\"Hello\",\"World\",\"Foo\",\"Bar\"],\"demoDouble\":5,\"demoString\":\"demo string\",\"demoBool\":true,\"demoRepeatedNestedMessage\":[{\"nestedString\":\"nested string\",\"nestedInt32\":42},{\"nestedString\":\"nested string\",\"nestedInt32\":42}],\"demoInt64\":123}")
         
         let reader = JSONReader.from(buffer)!

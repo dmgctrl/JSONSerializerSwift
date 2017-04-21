@@ -2,17 +2,17 @@ import Foundation
 
 public protocol Writer {
     static func writer() -> Writer?
-    func toBuffer() -> NSData
-    func writeTag(tag: Int)
-    func writeByte(v: UInt8)
-    func writeVarInt(v: Int)
-    func writeVarUInt(v: UInt)
-    func writeVarUInt64(v: UInt64)
-    func writeData(v: NSData)
-    func writeBool(v: Bool)
-    func writeFloat32(v: Float32)
-    func writeFloat64(v: Float64)
-    func writeString(v: String)
-    func pushTagMap(map: [Int:(String, Bool)])
+    func toBuffer() -> Data
+    func writeTag(_ tag: Int)
+    func writeByte(_ v: UInt8)
+    func writeVarInt(_ v: Int)
+    func writeVarUInt(_ v: UInt)
+    func writeVarUInt64(_ v: UInt64)
+    func writeData(_ v: Data)
+    func writeBool(_ v: Bool)
+    func writeFloat32(_ v: Float32)
+    func writeFloat64(_ v: Float64)
+    func writeString(_ v: String)
+    func pushTagMap(_ map: [Int:(String, Bool)])
     func popTagMap()
 }
