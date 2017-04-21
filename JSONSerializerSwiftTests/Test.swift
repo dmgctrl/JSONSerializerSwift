@@ -33,7 +33,15 @@ open class DemoMessage: Equatable {
     open let demoRepeated: [String]
     open let demoRepeatedNestedMessage: [DemoNestedMessage]!
     
-    init(sizeInBytes: Int, demoDouble: Float64?, demoInt32: Int?, demoInt64: Int?, demoBool: Bool?, demoString: String?, demoNestedMessage: DemoNestedMessage?, demoRepeated: [String], demoRepeatedNestedMessage: [DemoNestedMessage]!) {
+    init(sizeInBytes: Int,
+         demoDouble: Float64?,
+         demoInt32: Int?,
+         demoInt64: Int?,
+         demoBool: Bool?,
+         demoString: String?,
+         demoNestedMessage: DemoNestedMessage?,
+         demoRepeated: [String],
+         demoRepeatedNestedMessage: [DemoNestedMessage]!) {
         self.sizeInBytes = sizeInBytes
         self.demoDouble = demoDouble
         self.demoInt32 = demoInt32
@@ -160,7 +168,14 @@ open class DemoMessage: Equatable {
         return DemoMessage(sizeInBytes: sizeInBytes, demoDouble: demoDouble, demoInt32: demoInt32, demoInt64: demoInt64, demoBool: demoBool, demoString: demoString, demoNestedMessage: demoNestedMessage, demoRepeated: demoRepeated, demoRepeatedNestedMessage: demoRepeatedNestedMessage)
     }
     
-    class func sizeOf(_ demoDouble: Float64?, demoInt32: Int?, demoInt64: Int?, demoBool: Bool?, demoString: String?, demoNestedMessage: DemoNestedMessage?, demoRepeated: [String], demoRepeatedNestedMessage: [DemoNestedMessage]!) -> Int {
+    class func sizeOf(_ demoDouble: Float64?,
+                      demoInt32: Int?,
+                      demoInt64: Int?,
+                      demoBool: Bool?,
+                      demoString: String?,
+                      demoNestedMessage: DemoNestedMessage?,
+                      demoRepeated: [String],
+                      demoRepeatedNestedMessage: [DemoNestedMessage]!) -> Int {
         var n = 0
         
         if let _ = demoDouble {
@@ -271,7 +286,6 @@ open class DemoMessage: Equatable {
         open class func builder() -> DemoNestedMessageBuilder {
             return DemoNestedMessageBuilder()
         }
-        
     }
     
     open class DemoNestedMessageBuilder {
@@ -309,8 +323,6 @@ open class DemoMessage: Equatable {
             return DemoNestedMessage(sizeInBytes: sizeInBytes, nestedString: nestedString, nestedInt32: nestedInt32)
         }
     }
-    
-    
 }
 
 open class DemoMessageBuilder {

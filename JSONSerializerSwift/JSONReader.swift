@@ -1,17 +1,17 @@
 import Foundation
 
 open class JSONReader : Reader {
-    typealias RepeatedObject = (key: Int, generator: NSArray.Iterator)
+    typealias RepeatedObject = (key: Int, generator: Array<Any>.Iterator)
     
-    var generatorStack: [NSDictionary.Iterator] = []
-    var generator: NSDictionary.Iterator
+    var generatorStack: [Dictionary<String, Any>.Iterator] = []
+    var generator: Dictionary<String, Any>.Iterator
     var tagMapStack: [[String:(Int, Bool)]] = []
     var tagMap: [String:(Int, Bool)]! = nil
     var object: Any! = nil
     var repeatedObjectStack: [RepeatedObject?] = []
     var repeatedObject: RepeatedObject? = nil
     
-    init(dictionary: NSDictionary) {
+    init(dictionary: [String:Any]) {
         self.generator = dictionary.makeIterator()
     }
     
@@ -23,7 +23,7 @@ open class JSONReader : Reader {
             print(error)
         }
         
-        if let dict = readData as? NSDictionary {
+        if let dict = readData as? [String:Any] {
             return JSONReader(dictionary: dict)
         } else {
             return nil
@@ -31,7 +31,7 @@ open class JSONReader : Reader {
     }
     
     open class func from(_ inputStream: InputStream) -> Reader? {
-        let dict: NSDictionary = (try! JSONSerialization.jsonObject(with: inputStream, options: [])) as! NSDictionary
+        let dict: [String:Any] = (try! JSONSerialization.jsonObject(with: inputStream, options: [])) as! [String:Any]
         return JSONReader(dictionary: dict)
     }
     
@@ -43,9 +43,9 @@ open class JSONReader : Reader {
         
         if let
             keyValuePair = generator.next(),
-            let info = tagMap[keyValuePair.key as! String] {
+            let info = tagMap[keyValuePair.key] {
                 if info.1 {
-                    repeatedObject = (key: info.0, generator: (keyValuePair.value as! NSArray).makeIterator())
+                    repeatedObject = (key: info.0, generator: (keyValuePair.value as! [Any]).makeIterator())
                     object = repeatedObject?.generator.next()
                 } else {
                     object = keyValuePair.value
@@ -141,7 +141,7 @@ open class JSONReader : Reader {
         if nil != self.tagMap {
             tagMapStack.append(self.tagMap)
             generatorStack.append(generator)
-            generator = (object as! NSDictionary).makeIterator()
+            generator = (object as! [String:Any]).makeIterator()
             repeatedObjectStack.append(repeatedObject)
             repeatedObject = nil
         }
