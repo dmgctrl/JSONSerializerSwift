@@ -22,18 +22,26 @@ public func ==(a: DemoMessage.DemoNestedMessage, b: DemoMessage.DemoNestedMessag
     )
 }
 
-public class DemoMessage: Equatable {
-    public let sizeInBytes: Int
-    public let demoDouble: Float64?
-    public let demoInt32: Int?
-    public let demoInt64: Int?
-    public let demoBool: Bool?
-    public let demoString: String?
-    public let demoNestedMessage: DemoNestedMessage?
-    public let demoRepeated: [String]
-    public let demoRepeatedNestedMessage: [DemoNestedMessage]!
+open class DemoMessage: Equatable {
+    open let sizeInBytes: Int
+    open let demoDouble: Float64?
+    open let demoInt32: Int?
+    open let demoInt64: Int?
+    open let demoBool: Bool?
+    open let demoString: String?
+    open let demoNestedMessage: DemoNestedMessage?
+    open let demoRepeated: [String]
+    open let demoRepeatedNestedMessage: [DemoNestedMessage]!
     
-    init(sizeInBytes: Int, demoDouble: Float64?, demoInt32: Int?, demoInt64: Int?, demoBool: Bool?, demoString: String?, demoNestedMessage: DemoNestedMessage?, demoRepeated: [String], demoRepeatedNestedMessage: [DemoNestedMessage]!) {
+    init(sizeInBytes: Int,
+         demoDouble: Float64?,
+         demoInt32: Int?,
+         demoInt64: Int?,
+         demoBool: Bool?,
+         demoString: String?,
+         demoNestedMessage: DemoNestedMessage?,
+         demoRepeated: [String],
+         demoRepeatedNestedMessage: [DemoNestedMessage]!) {
         self.sizeInBytes = sizeInBytes
         self.demoDouble = demoDouble
         self.demoInt32 = demoInt32
@@ -45,7 +53,7 @@ public class DemoMessage: Equatable {
         self.demoRepeatedNestedMessage = demoRepeatedNestedMessage
     }
     
-    public func toWriter(w: Writer) {
+    open func toWriter(_ w: Writer) {
         let tagMap: [Int:(String, Bool)] = [
             9 : ("demoDouble", false),
             16 : ("demoInt32", false),
@@ -104,7 +112,7 @@ public class DemoMessage: Equatable {
         w.popTagMap()
     }
     
-    public class func fromReader(r: Reader) -> DemoMessage {
+    open class func fromReader(_ r: Reader) -> DemoMessage {
         let tagMap: [String:(Int, Bool)] = [
             "demoDouble" : (9, false),
             "demoInt32" : (16, false),
@@ -160,7 +168,14 @@ public class DemoMessage: Equatable {
         return DemoMessage(sizeInBytes: sizeInBytes, demoDouble: demoDouble, demoInt32: demoInt32, demoInt64: demoInt64, demoBool: demoBool, demoString: demoString, demoNestedMessage: demoNestedMessage, demoRepeated: demoRepeated, demoRepeatedNestedMessage: demoRepeatedNestedMessage)
     }
     
-    class func sizeOf(demoDouble: Float64?, demoInt32: Int?, demoInt64: Int?, demoBool: Bool?, demoString: String?, demoNestedMessage: DemoNestedMessage?, demoRepeated: [String], demoRepeatedNestedMessage: [DemoNestedMessage]!) -> Int {
+    class func sizeOf(_ demoDouble: Float64?,
+                      demoInt32: Int?,
+                      demoInt64: Int?,
+                      demoBool: Bool?,
+                      demoString: String?,
+                      demoNestedMessage: DemoNestedMessage?,
+                      demoRepeated: [String],
+                      demoRepeatedNestedMessage: [DemoNestedMessage]!) -> Int {
         var n = 0
         
         if let _ = demoDouble {
@@ -191,14 +206,14 @@ public class DemoMessage: Equatable {
         return n
     }
     
-    public class func builder() -> DemoMessageBuilder {
+    open class func builder() -> DemoMessageBuilder {
         return DemoMessageBuilder()
     }
     
-    public class DemoNestedMessage: Equatable {
-        public let sizeInBytes: Int
-        public let nestedString: String?
-        public let nestedInt32: Int?
+    open class DemoNestedMessage: Equatable {
+        open let sizeInBytes: Int
+        open let nestedString: String?
+        open let nestedInt32: Int?
         
         init(sizeInBytes: Int, nestedString: String?, nestedInt32: Int?) {
             self.sizeInBytes = sizeInBytes
@@ -206,7 +221,7 @@ public class DemoMessage: Equatable {
             self.nestedInt32 = nestedInt32
         }
         
-        public func toWriter(w: Writer) {
+        open func toWriter(_ w: Writer) {
             let tagMap: [Int:(String, Bool)] = [
                 10 : ("nestedString", false),
                 16 : ("nestedInt32", false)
@@ -227,7 +242,7 @@ public class DemoMessage: Equatable {
             w.popTagMap()
         }
         
-        public class func fromReader(r: Reader) -> DemoNestedMessage {
+        open class func fromReader(_ r: Reader) -> DemoNestedMessage {
             let tagMap: [String:(Int, Bool)] = [
                 "nestedString" : (10, false),
                 "nestedInt32" : (16, false)
@@ -255,7 +270,7 @@ public class DemoMessage: Equatable {
             return DemoNestedMessage(sizeInBytes: sizeInBytes, nestedString: nestedString, nestedInt32: nestedInt32)
         }
         
-        class func sizeOf(nestedString: String?, nestedInt32: Int?) -> Int {
+        class func sizeOf(_ nestedString: String?, nestedInt32: Int?) -> Int {
             var n = 0
             
             if let v = nestedString {
@@ -268,52 +283,49 @@ public class DemoMessage: Equatable {
             return n
         }
         
-        public class func builder() -> DemoNestedMessageBuilder {
+        open class func builder() -> DemoNestedMessageBuilder {
             return DemoNestedMessageBuilder()
         }
-        
     }
     
-    public class DemoNestedMessageBuilder {
+    open class DemoNestedMessageBuilder {
         var nestedString: String? = nil
         var nestedInt32: Int? = nil
         
-        public func clear() -> Self {
+        open func clear() -> Self {
             self.nestedString = nil
             self.nestedInt32 = nil
             return self
         }
         
-        public func setNestedString(v: String?) -> Self {
+        open func setNestedString(_ v: String?) -> Self {
             self.nestedString = v
             return self
         }
         
-        public func clearNestedString() -> Self {
+        open func clearNestedString() -> Self {
             self.nestedString = nil
             return self
         }
         
-        public func setNestedInt32(v: Int?) -> Self {
+        open func setNestedInt32(_ v: Int?) -> Self {
             self.nestedInt32 = v
             return self
         }
         
-        public func clearNestedInt32() -> Self {
+        open func clearNestedInt32() -> Self {
             self.nestedInt32 = nil
             return self
         }
         
-        public func build() -> DemoNestedMessage {
+        open func build() -> DemoNestedMessage {
             let sizeInBytes = DemoNestedMessage.sizeOf(nestedString, nestedInt32: nestedInt32)
             return DemoNestedMessage(sizeInBytes: sizeInBytes, nestedString: nestedString, nestedInt32: nestedInt32)
         }
     }
-    
-    
 }
 
-public class DemoMessageBuilder {
+open class DemoMessageBuilder {
     var demoDouble: Float64? = nil
     var demoInt32: Int? = nil
     var demoInt64: Int? = nil
@@ -323,7 +335,7 @@ public class DemoMessageBuilder {
     var demoRepeated: [String] = []
     var demoRepeatedNestedMessage: [DemoMessage.DemoNestedMessage]! = []
     
-    public func clear() -> Self {
+    open func clear() -> Self {
         self.demoDouble = nil
         self.demoInt32 = nil
         self.demoInt64 = nil
@@ -335,103 +347,103 @@ public class DemoMessageBuilder {
         return self
     }
     
-    public func setDemoDouble(v: Float64?) -> Self {
+    open func setDemoDouble(_ v: Float64?) -> Self {
         self.demoDouble = v
         return self
     }
     
-    public func clearDemoDouble() -> Self {
+    open func clearDemoDouble() -> Self {
         self.demoDouble = nil
         return self
     }
     
-    public func setDemoInt32(v: Int?) -> Self {
+    open func setDemoInt32(_ v: Int?) -> Self {
         self.demoInt32 = v
         return self
     }
     
-    public func clearDemoInt32() -> Self {
+    open func clearDemoInt32() -> Self {
         self.demoInt32 = nil
         return self
     }
     
-    public func setDemoInt64(v: Int?) -> Self {
+    open func setDemoInt64(_ v: Int?) -> Self {
         self.demoInt64 = v
         return self
     }
     
-    public func clearDemoInt64() -> Self {
+    open func clearDemoInt64() -> Self {
         self.demoInt64 = nil
         return self
     }
     
-    public func setDemoBool(v: Bool?) -> Self {
+    open func setDemoBool(_ v: Bool?) -> Self {
         self.demoBool = v
         return self
     }
     
-    public func clearDemoBool() -> Self {
+    open func clearDemoBool() -> Self {
         self.demoBool = nil
         return self
     }
     
-    public func setDemoString(v: String?) -> Self {
+    open func setDemoString(_ v: String?) -> Self {
         self.demoString = v
         return self
     }
     
-    public func clearDemoString() -> Self {
+    open func clearDemoString() -> Self {
         self.demoString = nil
         return self
     }
     
-    public func setDemoNestedMessage(v: DemoMessage.DemoNestedMessage?) -> Self {
+    open func setDemoNestedMessage(_ v: DemoMessage.DemoNestedMessage?) -> Self {
         self.demoNestedMessage = v
         return self
     }
     
-    public func clearDemoNestedMessage() -> Self {
+    open func clearDemoNestedMessage() -> Self {
         self.demoNestedMessage = nil
         return self
     }
     
-    public func setDemoRepeated(v: [String]) -> Self {
+    open func setDemoRepeated(_ v: [String]) -> Self {
         self.demoRepeated = v
         return self
     }
     
-    public func clearDemoRepeated() -> Self {
+    open func clearDemoRepeated() -> Self {
         self.demoRepeated = []
         return self
     }
     
-    public func setDemoRepeatedNestedMessage(v: [DemoMessage.DemoNestedMessage]!) -> Self {
+    open func setDemoRepeatedNestedMessage(_ v: [DemoMessage.DemoNestedMessage]!) -> Self {
         self.demoRepeatedNestedMessage = v
         return self
     }
     
-    public func clearDemoRepeatedNestedMessage() -> Self {
+    open func clearDemoRepeatedNestedMessage() -> Self {
         self.demoRepeatedNestedMessage = []
         return self
     }
     
-    public func build() -> DemoMessage {
+    open func build() -> DemoMessage {
         let sizeInBytes = DemoMessage.sizeOf(demoDouble, demoInt32: demoInt32, demoInt64: demoInt64, demoBool: demoBool, demoString: demoString, demoNestedMessage: demoNestedMessage, demoRepeated: demoRepeated, demoRepeatedNestedMessage: demoRepeatedNestedMessage)
         return DemoMessage(sizeInBytes: sizeInBytes, demoDouble: demoDouble, demoInt32: demoInt32, demoInt64: demoInt64, demoBool: demoBool, demoString: demoString, demoNestedMessage: demoNestedMessage, demoRepeated: demoRepeated, demoRepeatedNestedMessage: demoRepeatedNestedMessage)
     }
 }
 
-private func sizeOfVarInt(v: Int) -> Int {
+private func sizeOfVarInt(_ v: Int) -> Int {
     var n = 0
     var x = v
     repeat {
         x = x >> 7
-        n++
+        n += 1
     } while (x > 0)
     return n
 }
 
-private func sizeOfString(s: String) -> Int {
+private func sizeOfString(_ s: String) -> Int {
     let b = s.utf8.count
     return sizeOfVarInt(b) + b
 }

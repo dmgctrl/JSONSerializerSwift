@@ -1,6 +1,6 @@
 import Foundation
 
-public class JSONWriter : Writer {
+open class JSONWriter : Writer {
     var tagMapStack: [[Int:(String, Bool)]] = []
     var tagMap: [Int:(String, Bool)]! = nil
     var objectStack: [NSMutableDictionary] = []
@@ -8,65 +8,65 @@ public class JSONWriter : Writer {
     var tag: Int! = nil
     var isRepeatedStack: [Bool] = []
     
-    public class func writer() -> Writer? {
+    open class func writer() -> Writer? {
         return JSONWriter()
     }
     
-    public func toBuffer() -> NSData {
-        return try! NSJSONSerialization.dataWithJSONObject(object, options: [])
+    open func toBuffer() -> Data {
+        return try! JSONSerialization.data(withJSONObject: object, options: [])
     }
     
-    public func writeTag(tag: Int) {
+    open func writeTag(_ tag: Int) {
         self.tag = tag
     }
     
-    public func writeByte(v: UInt8) {
+    open func writeByte(_ v: UInt8) {
         self.writeValue(Int(v))
     }
     
-    public func writeVarInt(v: Int) {
+    open func writeVarInt(_ v: Int) {
         if 0 == tag & 0x02 {
             self.writeValue(v)
         }
     }
     
-    public func writeVarUInt(v: UInt) {
+    open func writeVarUInt(_ v: UInt) {
         self.writeValue(v)
     }
     
-    public func writeVarUInt64(v: UInt64) {
+    open func writeVarUInt64(_ v: UInt64) {
         self.writeValue(Int(v))
     }
     
-    public func writeBool(v: Bool) {
+    open func writeBool(_ v: Bool) {
         self.writeValue(v)
     }
     
-    public func writeData(v: NSData) {
-        NSException(name:"Unsupported Operation", reason:"", userInfo: nil).raise()
+    open func writeData(_ v: Data) {
+        NSException(name: NSExceptionName(rawValue: "Unsupported Operation"), reason: "", userInfo: nil).raise()
     }
     
-    public func writeFloat32(v: Float32) {
+    open func writeFloat32(_ v: Float32) {
         self.writeValue(v)
     }
     
-    public func writeFloat64(v: Float64) {
+    open func writeFloat64(_ v: Float64) {
         self.writeValue(v)
     }
     
-    public func writeString(v: String) {
+    open func writeString(_ v: String) {
         self.writeValue(v)
     }
     
-    private func writeValue(v: AnyObject) {
+    fileprivate func writeValue(_ v: Any) {
         self.writeValue(v, object: object)
     }
     
-    private func writeValue(v: AnyObject, object: NSMutableDictionary) {
+    fileprivate func writeValue(_ v: Any, object: NSMutableDictionary) {
         if let info = tagMap[tag] {
             if info.1 {
                 if let array = object[info.0] as? NSMutableArray {
-                    array.addObject(v)
+                    array.add(v)
                 } else {
                     object[info.0] = NSMutableArray(objects: v)
                 }
@@ -78,21 +78,21 @@ public class JSONWriter : Writer {
         }
     }
     
-    public func pushTagMap(map: [Int:(String, Bool)]) {
+    open func pushTagMap(_ map: [Int:(String, Bool)]) {
         let parentObject = object
         object = [:]
         if tag != nil {
-            self.writeValue(object, object: parentObject)
+            self.writeValue(object, object: parentObject!)
         }
         
-        if nil != tagMap {
+        if tagMap != nil {
             tagMapStack.append(tagMap)
-            objectStack.append(parentObject)
+            objectStack.append(parentObject!)
         }
         tagMap = map
     }
     
-    public func popTagMap() {
+    open func popTagMap() {
         if tagMapStack.count > 0 {
             tagMap = tagMapStack.removeLast()
             object = objectStack.removeLast()

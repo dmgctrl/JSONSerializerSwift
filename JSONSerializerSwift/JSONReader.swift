@@ -1,51 +1,51 @@
 import Foundation
 
-public class JSONReader : Reader {
-    typealias RepeatedObject = (key: Int, generator: NSArray.Generator)
+open class JSONReader : Reader {
+    typealias RepeatedObject = (key: Int, generator: Array<Any>.Iterator)
     
-    var generatorStack: [NSDictionary.Generator] = []
-    var generator: NSDictionary.Generator
+    var generatorStack: [Dictionary<String, Any>.Iterator] = []
+    var generator: Dictionary<String, Any>.Iterator
     var tagMapStack: [[String:(Int, Bool)]] = []
     var tagMap: [String:(Int, Bool)]! = nil
-    var object: AnyObject! = nil
+    var object: Any! = nil
     var repeatedObjectStack: [RepeatedObject?] = []
     var repeatedObject: RepeatedObject? = nil
     
-    init(dictionary: NSDictionary) {
-        self.generator = dictionary.generate()
+    init(dictionary: [String:Any]) {
+        self.generator = dictionary.makeIterator()
     }
     
-    public class func from(data: NSData) -> Reader? {
-        var readData : AnyObject?
+    open class func from(_ data: Data) -> Reader? {
+        var readData : Any?
         do {
-            readData = try NSJSONSerialization.JSONObjectWithData(data, options: [])
+            readData = try JSONSerialization.jsonObject(with: data, options: [])
         } catch {
             print(error)
         }
         
-        if let dict = readData as? NSDictionary {
+        if let dict = readData as? [String:Any] {
             return JSONReader(dictionary: dict)
         } else {
             return nil
         }
     }
     
-    public class func from(inputStream: NSInputStream) -> Reader? {
-        let dict: NSDictionary = (try! NSJSONSerialization.JSONObjectWithStream(inputStream, options: [])) as! NSDictionary
+    open class func from(_ inputStream: InputStream) -> Reader? {
+        let dict: [String:Any] = (try! JSONSerialization.jsonObject(with: inputStream, options: [])) as! [String:Any]
         return JSONReader(dictionary: dict)
     }
     
-    public func readTag() -> Int {
-        if let value: AnyObject = repeatedObject?.generator.next() {
+    open func readTag() -> Int {
+        if let value: Any = repeatedObject?.generator.next() {
             object = value
             return repeatedObject!.key
         }
         
         if let
             keyValuePair = generator.next(),
-            info = tagMap[keyValuePair.key as! String] {
+            let info = tagMap[keyValuePair.key] {
                 if info.1 {
-                    repeatedObject = (key: info.0, generator: (keyValuePair.value as! NSArray).generate())
+                    repeatedObject = (key: info.0, generator: (keyValuePair.value as! [Any]).makeIterator())
                     object = repeatedObject?.generator.next()
                 } else {
                     object = keyValuePair.value
@@ -61,94 +61,94 @@ public class JSONReader : Reader {
         }
     }
     
-    public func readVarInt() -> Int {
-        if let v = (object as? NSNumber)?.integerValue {
+    open func readVarInt() -> Int {
+        if let v = (object as? NSNumber)?.intValue {
             return v
         }
         return 0
     }
     
-    public func readVarUInt() -> UInt {
-        if let v = (object as? NSNumber)?.unsignedIntegerValue {
+    open func readVarUInt() -> UInt {
+        if let v = (object as? NSNumber)?.uintValue {
             return UInt(v)
         }
         return 0
     }
     
-    public func readVarUInt64() -> UInt64 {
-        if let v = (object as? NSNumber)?.unsignedLongLongValue {
+    open func readVarUInt64() -> UInt64 {
+        if let v = (object as? NSNumber)?.uint64Value {
             return UInt64(v)
         }
         return 0
     }
     
-    public func readBool() -> Bool {
+    open func readBool() -> Bool {
         if let v = (object as? NSNumber)?.boolValue {
             return v
         }
         return false
     }
     
-    public func readData() -> NSData {
-        NSException(name:"Unsupported Operation", reason:"", userInfo: nil).raise()
-        return NSData()
+    open func readData() -> Data {
+        NSException(name: NSExceptionName(rawValue: "Unsupported Operation"), reason: "", userInfo: nil).raise()
+        return Data()
     }
     
-    public func readUInt32() -> UInt32 {
-        if let v = (object as? NSNumber)?.unsignedIntegerValue {
+    open func readUInt32() -> UInt32 {
+        if let v = (object as? NSNumber)?.uintValue {
             return UInt32(v)
         }
         return 0
     }
     
-    public func readUInt64() -> UInt64 {
-        if let v = (object as? NSNumber)?.unsignedIntegerValue {
+    open func readUInt64() -> UInt64 {
+        if let v = (object as? NSNumber)?.uintValue {
             return UInt64(v)
         }
         return 0
     }
     
-    public func readFloat32() -> Float32 {
+    open func readFloat32() -> Float32 {
         if let v = (object as? NSNumber)?.floatValue {
             return Float32(v)
         }
         return 0
     }
     
-    public func readFloat64() -> Float64 {
+    open func readFloat64() -> Float64 {
         if let v = (object as? NSNumber)?.doubleValue {
             return Float64(v)
         }
         return 0
     }
     
-    public func readString() -> String {
+    open func readString() -> String {
         if let value = object as? String {
             return value
         }
         return ""
     }
     
-    public func pushLimit(limit: Int) -> Int {
+    open func pushLimit(_ limit: Int) -> Int {
         return 0 // NO OP
     }
     
-    public func popLimit(limit: Int) {
+    open func popLimit(_ limit: Int) {
         // NO OP
     }
     
-    public func pushTagMap(map: [String:(Int, Bool)]) {
+    open func pushTagMap(_ map: [String:(Int, Bool)]) {
         if nil != self.tagMap {
             tagMapStack.append(self.tagMap)
             generatorStack.append(generator)
-            generator = (object as! NSDictionary).generate()
+            generator = (object as! [String:Any]).makeIterator()
             repeatedObjectStack.append(repeatedObject)
             repeatedObject = nil
         }
         self.tagMap = map
     }
     
-    public func popTagMap() {
+    open func popTagMap() {
         if tagMapStack.count > 0 {
             tagMap = tagMapStack.removeLast()
             generator = generatorStack.removeLast()
